@@ -1,0 +1,12 @@
+domain={{ dns_domain }}
+local=/{{ dns_domain }}/
+
+interface={{ dns_interface }}
+listen-address={{ dns_listen_address }}
+
+address=/gw.{{ dns_domain }}/{{ dns_gateway_ip }}
+address=/dns.{{ dns_domain }}/{{ dns_server_ip }}
+address=/web.{{ dns_domain }}/{{ dns_web_ip }}
+
+server={{ dns_upstream_1 }}
+server={{ dns_upstream_2 }}

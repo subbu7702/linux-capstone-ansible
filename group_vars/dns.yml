@@ -1,0 +1,13 @@
+server_role: dns
+
+dns_interface: enp0s3
+dns_listen_address: "127.0.0.1,192.168.50.20"
+
+dns_domain: proj.lab.test
+
+dns_gateway_ip: 192.168.50.1
+dns_server_ip: 192.168.50.20
+dns_web_ip: 192.168.50.30
+
+dns_upstream_1: 8.8.8.8
+dns_upstream_2: 1.1.1.1
