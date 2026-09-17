@@ -5,7 +5,7 @@
   tasks:
     - name: Deploy dnsmasq configuration
       template:
-        src: /templates/dnsmasq.conf.j2
+        src: "{{ playbook_dir }}/templates/dnsmasq.conf.j2"
         dest: /etc/dnsmasq.d/capstone.conf
       notify: Restart dnsmasq
     - name: Validate dnsmasq configuration
