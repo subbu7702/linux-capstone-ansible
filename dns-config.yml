@@ -5,7 +5,7 @@
   tasks:
     - name: Deploy dnsmasq configuration
       template:
-        src: ~/capstone/templates/dnsmasq.conf.j2
+        src: /templates/dnsmasq.conf.j2
         dest: /etc/dnsmasq.d/capstone.conf
       notify: Restart dnsmasq
     - name: Validate dnsmasq configuration
