@@ -1,0 +1,36 @@
+- name: Configure capstone dns server
+  hosts: dns
+  become: true
+
+  tasks:
+    - name: Deploy dnsmasq configuration
+      template:
+        src: "{{ playbook_dir }}/templates/dnsmasq.conf.j2"
+        dest: /etc/dnsmasq.d/capstone.conf
+      notify: Restart dnsmasq
+    
+    - name: Validate dnsmasq configuration
+      command: dnsmasq --test
+      changed_when: false
+
+  handlers:
+    - name: Restart dnsmasq
+      service:
+        name: dnsmasq
+        state: restarted
+
+- name: Configure capstone web server
+  hosts: web
+  become: true
+
+  tasks:
+    - name: Install nginx
+      dnf:
+        name: nginx
+        state: present
+
+    - name: Ensure nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: true
