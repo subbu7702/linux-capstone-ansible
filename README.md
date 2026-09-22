@@ -56,8 +56,8 @@ VM3	  Web Server	  NGINX
 + Rocky Linux 9.8 (Blue Onyx)
 
 ### Network Design
-enp0s3 → NAT → Internet access
-enp0s8 →  Internal network
++ enp0s3 → NAT → Internet access
++ enp0s8 →  Internal network
 VM2 and VM3 connect to the internal network through their internal interfaces.
 
 ## Implementation
@@ -101,7 +101,7 @@ A[Internal VM] --> B[VM1 Gateway]
 B -->|NAT| C[Internet]
 B -->|DNAT| D[VM3 Web Server]
 ```
-### DNS and Web Services
+### 3. DNS and Web Services
 
 + DNS
 VM2 provides internal DNS using dnsmasq.
@@ -110,3 +110,20 @@ DNS configuration was also tested from other nodes to verify that hostname resol
 + Web Server
 VM3 runs NGINX and provides the web service for the environment.
 The web server was tested both directly from the internal network and through the gateway's DNAT configuration.
+
+### 4. Ansible Configuration Management 
+
+Once the Infrastructure was manually validated, Ansible was used to automate it entirely. It includes
+
++ Validation of dnsmasq service as it is base of our VM's Internal Network ( Checking of Installation , State of Service)
++ Validation of NGINX service in our Web Server ( Checking of Installation , State of Service)
++ Creation of templates to avoid hard-coding
++ Idempotent Execution (Example: If NGINX is found to be installed , it wont be installed again )
+
+``` mermaid
+flowchart TD
+A[Ansible Controller] --> B[VM2]
+A --> C[VM3]
+B --> D[dnsmasq configuration]
+C --> E[NGINX configuration]
+```
