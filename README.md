@@ -8,7 +8,7 @@ The environment was first built and validated maunually . It was later automated
 
 ## PROJECT OVERVIEW
 
-The goal of this project is to build a small but realistic Linux Environment , manually configure the configurations and networking and progressively automate the administration
+The goal of this project is to build a small but realistic Linux Environment , manually configure the administration , networking and progressively automate the administration
 This project covers:
 + Linux System Administration
 + TCP/IP Networking and Routing
@@ -22,8 +22,7 @@ This project covers:
 + Version Control using Git/Github
 
 ## ARCHITECTURE
-The project consists of 3 Rocky Linux 9.8 VMs(Virtual Machines) connected through an internal network while one of them functions as a Gateway Serversupporting
-NAT and forwarding
+The project consists of 3 Rocky Linux 9.8 VMs(Virtual Machines) connected through an internal network while one of them functions as a Gateway server supporting NAT and forwarding
 
 ## Architecture
 
@@ -128,3 +127,42 @@ A --> C[VM3]
 B --> D[dnsmasq configuration]
 C --> E[NGINX configuration]
 ```
+
+#### 5. Jenkins CI Automation
+
+Jenkins was introduced to automate the Ansible deployment workflow.
+
+The Jenkins job:
+
++ Checks out the project from GitHub
++ Executes the Ansible deployment
++ Applies configuration to the target servers
++ Performs post-deployment verification
+
+The Jenkins service account was configured with the required SSH credentials and permissions to execute the automation.
+
+The project also involved troubleshooting service-account-specific issues such as:
+
++ SSH key permissions
++ known_hosts access
++ Privilege escalation
++ Jenkins workspace permissions
+
+### 6. Terraform / Infrastructure as Code
+
+Terraform was introduced as a lightweight Infrastructure as Code component.
+
+Rather than forcing Terraform to manage the VirtualBox virtual machines directly, it is used to define infrastructure metadata and generate the Ansible inventory.
+
+Terraform variables define the environment:
+
+Domain
+DNS IP
+Web IP
+
+Terraform then generates:
+
+generated_inventory.ini
+
+This creates a clear separation of responsibilities:
+
