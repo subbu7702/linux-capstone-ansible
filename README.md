@@ -1,4 +1,4 @@
-                                                # **LINUX INFRASTRUCTURE AND AUTOMATION CAPSTONE**
+                                                # LINUX INFRASTRUCTURE AND AUTOMATION CAPSTONE
 
 A Hands on Infrastructure Project combining Linux, Ansible, Jenkins and Terraform to bring Linux Administration , Networking , Automation
 CI (Continuous Integration) and IaC ( Infrastructure as Code) into a single environment.
