@@ -29,10 +29,10 @@ NAT and forwarding
 
 ```mermaid
 graph TD
-    Internet[Internet] -->|NAT| VM1[VM1 - Gateway<br>192.168.50.1]
+    Internet[Internet] -->|NAT| VM1[VM1 - Gateway]
 
-    VM1 -->|Internal Network| VM2[VM2 - DNS<br>192.168.50.20<br>dnsmasq]
-    VM1 -->|Internal Network| VM3[VM3 - Web<br>192.168.50.30<br>NGINX]
+    VM1 -->|Internal Network| VM2[VM2 - DNS<br>dnsmasq]
+    VM1 -->|Internal Network| VM3[VM3 - Web<br>NGINX]
 
     VM2 -->|DNS Resolution| VM3
     VM1 -->|DNAT :8080 → :80| VM3
