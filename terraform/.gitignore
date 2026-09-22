@@ -1,0 +1,5 @@
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+generated_inventory.ini
