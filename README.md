@@ -58,7 +58,7 @@ graph TD
 ### Network Design
 + enp0s3 → NAT → Internet access
 + enp0s8 →  Internal network
-VM2 and VM3 connect to the internal network through their internal interfaces.
++ VM2 and VM3 connect to the internal network through their internal interfaces.
 
 ## Implementation
 
@@ -277,6 +277,7 @@ These failures were treated as part of the learning process rather than simply w
 + dnsmasq
 
 ## PROJECT STRUCTURE
+```text
 linux-capstone-ansible/
 │
 ├── README.md
@@ -297,7 +298,7 @@ linux-capstone-ansible/
     ├── outputs.tf
     ├── terraform.tfvars
     └── generated_inventory.ini
-
+```
 ## OUTCOME
 
 The project evolved from a manually configured Linux environment into an automated infrastructure workflow.
@@ -308,5 +309,5 @@ A[Linux Administration] --> B[Linux Networking]
 B --> C[Ansible]
 C --> D[Jenkins]
 D --> E[Terraform]
-E --> F[Automated Infrastructure Workflow]
+E --> F[Automated Infra Workflow]
 ```
