@@ -40,10 +40,11 @@ graph TD
 
 ## VM Roles
 
-VM		Role	   Main Services
-VM1	   Gateway	  Routing, NAT, Firewall
-VM2	  DNS Server	 dnsmasq
-VM3	  Web Server	  NGINX
+| VM  | Role | Main Services |
+|-----|------|---------------|
+| VM1 | Gateway    | Routing, NAT, Firewall|
+| VM2 |	DNS Server | dnsmasq|
+| VM3 |	Web Server | NGINX |
 
 ## Environment
 
