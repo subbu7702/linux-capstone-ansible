@@ -166,3 +166,147 @@ generated_inventory.ini
 
 This creates a clear separation of responsibilities:
 
+``` mermaid
+flowchart TD
+A[Terraform] -->|Infrastructure metadata| B[generated_inventory.ini]
+B --> C[Ansible]
+C -->|Configuration management| D[Linux Servers]
+```
+## AUTOMATION WORKFLOW
+
+The final workflow combines the individual technologies into a single infrastructure pipeline:
+
+``` mermaid
+flowchart TD
+A[GitHub] --> B[Terraform]
+B --> C[generated_inventory.ini]
+C --> D[Ansible]
+D --> E[VM2 - DNS]
+D --> F[VM3 - NGINX]
+E --> G[Jenkins]
+F --> G
+G --> H[Deployment + Verification]
+```
+The technologies have deliberately separated responsibilities:
+| Technology | Responsibility |
+|---|---|
+| Git/GitHub | Source control |
+| Terraform | Infrastructure metadata / inventory generation |
+| Ansible | Server configuration |
+| Jenkins | Automation orchestration and verification |
+| Linux | Operating system and services |
+| VirtualBox | Lab virtualization |
+
+## VALIDATION AND TESTING 
+The environment was validated and tested at multiple levels:
+
+### Network Validation
++ Interface and IP verification
++ Routing verification
++ Internal connectivity testing
++ NAT testing
++ DNAT testing
++ Firewall rule validation
++ DNS Validation
+### Internal hostname resolution
++ dnsmasq service status
++ DNS connectivity from other nodes
++ Web Validation
++ NGINX service status
++ HTTP connectivity
++ Internal web access
++ Gateway DNAT access
+### Automation Validation
++ Ansible connectivity using SSH keys
++ Ansible playbook execution
++ Idempotency testing
++ Jenkins deployment execution
++ Post-deployment verification
++ Terraform plan validation
++ Reboot Validation
+
+Services and networking were also tested after VM reboots to ensure that configuration persisted correctly.
+
+## KEY TROUBLESHOOTING
+
+A significant part of the project involved diagnosing real configuration and service failures.
+
+Examples included:
+
++ dnsmasq failing to start because the configured address was not yet available during boot
++ SSH authentication and private-key permission issues
++ Jenkins service-account access problems:
+    + known_hosts permission
+    + Ansible privilege escalation problems
+    + Firewall forwarding behaviour
+    + Terraform state and configuration drift
+    + Service behaviour after reboot
+
+These failures were treated as part of the learning process rather than simply working around them.
+
+## SKILLS DEMONSTRATED
+### Linux Administration
++ System administration
++ systemd
++ SSH
++ Package management
++ Permissions
++ Service troubleshooting
+### Networking
++ TCP/IP
++ Routing
++ NAT
++ DNAT
++ DNS
++ DHCP concepts
++ Firewalling
++ Network troubleshooting
+### Automation
++ Ansible
++ Jinja2 templates
++ Idempotent configuration
+### Terraform
++ Infrastructure metadata
+### CI/CD
++ Jenkins
++ Git/GitHub integration
++ Automated deployment
++ Post-deployment verification
+### Web & Infrastructure Services
++ NGINX
++ dnsmasq
+
+## PROJECT STRUCTURE
+linux-capstone-ansible/
+│
+├── README.md
+│
+├── dns-config.yml
+├── deploy.yml
+│
+├── group_vars/
+│   ├── dns.yml
+│   └── web.yml
+│
+├── templates/
+│   └── dnsmasq.conf.j2
+│
+└── terraform/
+    ├── main.tf
+    ├── variables.tf
+    ├── outputs.tf
+    ├── terraform.tfvars
+    └── generated_inventory.ini
+
+## OUTCOME
+
+The project evolved from a manually configured Linux environment into an automated infrastructure workflow.
+The final implementation demonstrates how individual infrastructure technologies can work together:
+``` mermaid
+flowchart TD
+A[Linux Administration] --> B[Linux Networking]
+B --> C[Ansible]
+C --> D[Jenkins]
+D --> E[Terraform]
+E --> F[Automated Infrastructure Workflow]
+```
