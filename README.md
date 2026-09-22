@@ -22,7 +22,7 @@ This project covers:
 + Version Control using Git/Github
 
 ## ARCHITECTURE
-The project consists of 3 Rocky Linux 9.8 VMs connected through an internal network while one of them functions as a Gateway Serversupporting
+The project consists of 3 Rocky Linux 9.8 VMs(Virtual Machines) connected through an internal network while one of them functions as a Gateway Serversupporting
 NAT and forwarding
 
 ## Architecture
@@ -36,4 +36,77 @@ graph TD
 
     VM2 -->|DNS Resolution| VM3
     VM1 -->|DNAT :8080 → :80| VM3
+```
 
+## VM Roles
+
+VM		Role	   Main Services
+VM1	   Gateway	  Routing, NAT, Firewall
+VM2	  DNS Server	 dnsmasq
+VM3	  Web Server	  NGINX
+
+## Environment
+
+### Virtualization
++ VirtualBox
++ 3 Rocky Linux 9.8 virtual machines
++ Internal network: proj-internal
+
+### Operating System
++ Rocky Linux 9.8 (Blue Onyx)
+
+### Network Design
+enp0s3 → NAT → Internet access
+enp0s8 →  Internal network
+VM2 and VM3 connect to the internal network through their internal interfaces.
+
+## Implementation
+
+### 1. Linux Administration
+
+This was initially configured manually to build a base for the machine before automating anything. This phase involved the following tasks
++ Hostname configuration
++ User configuration
++ Package management
++ Service management using systemctl
++ Process and Resource management
++ File and Service management
++ SSH Hardening ( Private Key generation)
++ Service hardening
++ Service Troubleshooting
++ Configuration persistence after rebooting machine
+This also involved deliberately failing service and bringing them back up to understand them even more.
+
+### 2. Linux Networking
+VM1 was configured as the network gateway for the internal environment.
+
+Implemented:
+
++ Static IP addressing
++ IP forwarding
++ Routing
++ NAT/MASQUERADE
++ DNAT
++ Stateful firewall rules
++ Internal network connectivity
++ Controlled forwarding between interfaces
+
+The gateway uses a default FORWARD policy of DROP, with explicit rules allowing required traffic.
+
+Example traffic flow:
+
+``` mermaid
+flowchart TD
+A[Internal VM] --> B[VM1 Gateway]
+B -->|NAT| C[Internet]
+B -->|DNAT| D[VM3 Web Server]
+```
+### DNS and Web Services
+
++ DNS
+VM2 provides internal DNS using dnsmasq.
+DNS configuration was also tested from other nodes to verify that hostname resolution worked correctly across the internal network.
+
++ Web Server
+VM3 runs NGINX and provides the web service for the environment.
+The web server was tested both directly from the internal network and through the gateway's DNAT configuration.
